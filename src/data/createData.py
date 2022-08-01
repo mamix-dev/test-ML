@@ -8,13 +8,20 @@ class creatingData:
         self.degree = degree
         self.x, self.y = None, None
     
+    def linear_function(self, x):
+            return self.m * x + self.b
+
     def createData(self):
         """Creates a random polynomial function and associated values"""
-        self.roots = np.random.uniform(-5,5, self.degree)
-        polyCoefficients = np.poly(self.roots)
-        self.x = np.arange(-50,50)
-        self.y = np.polyval(polyCoefficients, self.x)
-    
+        self.m = rd.randint(0,10)
+        self.b = rd.randint(0,10)
+        self.x = np.arange(0,500)
+        self.y = []
+        for val in self.x:
+            self.y.append(self.linear_function(val))
+        print(self.y)
+
+
     def plotData(self):
         """Plots data using matplotlib"""
         self.createData()
@@ -28,10 +35,12 @@ class creatingData:
             dataFile.write(f'{self.x[ind]}, {self.y[ind]}\n')
         dataFile.close()
         actualData = open('./src/data/actual.txt', 'w')
-        actualData.write(f'{self.degree}\n')
-        for x in self.roots:
-            actualData.write(f'{x}\n')
+        actualData.write('----M----\n')
+        actualData.write(f'{self.m}\n')
+        actualData.write('----B----\n')
+        actualData.write(f'{self.b}\n')
+        actualData.close()
 
 if __name__ == '__main__':
-    main = creatingData(5)
+    main = creatingData(2)
     main.saveData()
